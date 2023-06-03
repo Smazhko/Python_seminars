@@ -101,3 +101,4 @@ print(countBigger)
 # (если меньше нуля, то значение в список не попадает)
 a = [int(a) for a in input().split() if int(a) > 0]
 print(a)
+
