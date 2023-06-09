@@ -7,11 +7,7 @@
 
 # text = input("Введите любую строку: ")
 
-# set_text = set(text)
-# dict_text = dict()
-
-# for i in set_text:
-#     dict_text[i] = -1
+# dict_text = {item: -1 for item in set(text)} # ГЕНЕРАТОР СЛОВАРЯ - ШИКАРНО !
 
 # for i in list(text):
 #     dict_text[i] = dict_text[i] + 1
@@ -20,7 +16,7 @@
 #     else:
 #         print(f'{i}_{dict_text[i]}', end=' ')
 
-# ============== со срезами ==========
+# ============== со срезами ========== НЕ РАБОТАЕТ если вводить строку без пробелов между буквами
 # s = input()
 # s = s.split()
 # print(s)

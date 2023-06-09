@@ -67,7 +67,11 @@
     del dictionary['left']      # удаление ключа вместе с элементом
     
     dictionary.items()          # представление словаря в виде списка кортежей
-                                # [ (key, element), (key, element), ... ]
+                                # dict_items([(key, element), (key, element), ... ])
+    dictionary.values()         # вывод ЗНАЧЕНИЙ всех ключей
+                                # dict_values([elem, elem, elem, ...])
+    dictionary.keys()           # вывод всех КЛЮЧЕЙ (индексов) словаря
+                                # dict_keys(['key', 'key', 'key', ...])
 
     for item in dictionary:
     ИЛИ 
@@ -118,7 +122,8 @@
 
 Простая ситуация — список:
 
-    list_1 = [выражение for item in iterable] (iterable - коллекция)
+    list_1 = [выражение for item in iterable]  *iterable - любая коллекция
+    { key:value for item in list if conditional } - генератор словаря
 
 Выборка по заданному условию:
 

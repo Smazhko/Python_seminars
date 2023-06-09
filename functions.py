@@ -77,26 +77,26 @@
 # имеющий такую площадь. Гарантируется, что самая далекая
 # планета ровно одна
 
-from math import pi as PI
+# from math import pi as PI
 
-def find_farthest_orbit(list_of_orbits):
-    maxArea = 0
-    a,b = list_of_orbits[1]
+# def find_farthest_orbit(list_of_orbits):
+#     maxArea = 0
+#     a,b = list_of_orbits[1]
 
-    # for orbit in list_of_orbits:
-    #     a, b = orbit
-    #     if a != b:
-    #         currentArea = PI * a * b
-    #         if currentArea > maxArea:
-    #                 maxArea = currentArea
-    #                 farest = orbit
-    # return farest
+#     # for orbit in list_of_orbits:
+#     #     a, b = orbit
+#     #     if a != b:
+#     #         currentArea = PI * a * b
+#     #         if currentArea > maxArea:
+#     #                 maxArea = currentArea
+#     #                 farest = orbit
+#     # return farest
     
     
 
-orbits = [(1, 3), (2.5, 10), (7, 2), (6, 6), (4, 3)]
-print(find_farthest_orbit(orbits))
-print(sum(orbits))
+# orbits = [(1, 3), (2.5, 10), (7, 2), (6, 6), (4, 3)]
+# print(find_farthest_orbit(orbits))
+# print(sum(orbits))
 
 
 # from math import pi
@@ -105,3 +105,9 @@ print(sum(orbits))
 
 # p = max(orbits, key=lambda x: (x[0] != x[1]) * x[0] * x[1]*pi)
 # print(p)
+
+list_1 = [1,2,2,2,1,1,4,3,3,3,4,4,4,3,4]
+
+for item in sorted(set(list_1)):
+    print(f"элемент {item} имеет {list_1.count(item) // 2} пар")
+
