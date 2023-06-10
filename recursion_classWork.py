@@ -31,10 +31,12 @@
 
 import random as rnd
 
-def replaceScore():
+def replaceScore(scoreList):
+    return list(map(lambda item: (1 if item > 3 else item), scoreList))
 
-
-
+scoreList = [rnd.randint(1,5) for i in range(0,20)]
+print(scoreList)
+print(replaceScore(scoreList))
 
 # Задача №35 ========================================================================
 # Напишите функцию, которая принимает одно число и проверяет, является ли оно простым
