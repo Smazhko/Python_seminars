@@ -52,9 +52,12 @@
 # Напишите такое лямбда-выражение transformation, чтобы transformed_values получился
 # копией values.
 
-# list_1 = [1,2,3,4]
-# list_copy = list(map(lambda x: x, list_1))
-# print(list_copy)
+# def transformation(values):
+#     return list(map(lambda x: x, values))
+
+# values = [1,2,3,4]
+# transformed_values = transformation(values)
+# print(transformed_values)
 
 
 # ЗАДАЧА =========================================================
