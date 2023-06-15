@@ -4,29 +4,18 @@
 # Input: a a a b c a a d c d d
 # Output: a a_1 a_2 b c a_3 a_4 d c_1 d_1 d_2
 # Для решения данной задачи используйте функцию .split()
+'''
+text = input("Введите любую строку: ")
 
-# text = input("Введите любую строку: ")
+dict_text = {item: -1 for item in set(text)} # ГЕНЕРАТОР СЛОВАРЯ - ШИКАРНО !
 
-# dict_text = {item: -1 for item in set(text)} # ГЕНЕРАТОР СЛОВАРЯ - ШИКАРНО !
+for i in list(text):
+    dict_text[i] = dict_text[i] + 1
+    if dict_text[i] == 0:
+        print(f'{i}', end=' ')
+    else:
+        print(f'{i}_{dict_text[i]}', end=' ')
 
-# for i in list(text):
-#     dict_text[i] = dict_text[i] + 1
-#     if dict_text[i] == 0:
-#         print(f'{i}', end=' ')
-#     else:
-#         print(f'{i}_{dict_text[i]}', end=' ')
-
-# ============== со срезами ========== НЕ РАБОТАЕТ если вводить строку без пробелов между буквами
-# s = input()
-# s = s.split()
-# print(s)
-# final_string = ''
-# for i in range(len(s)):
-#     if s[0:i].count(s[i]) == 0:
-#         final_string += f' {s[i]}'
-#     else:
-#         final_string += f' {s[i]}_{s[0:i].count(s[i])}'
-# print(final_string)
 
 # ====== РЕШЕНИЕ С GET =====================
 # st = list(input("Введите строку: "))
@@ -40,7 +29,7 @@
 #         d[st[i]] = 1
 #     p = p + f"{st[i]}_{d[st[i]]}"
 # print(p)
-
+'''
 # =================================================================================================
 # Пользователь вводит текст(строка). Словом считается последовательность непробельных символов идущих
 # подряд, слова разделены одним или большим числом пробелов. Определите, сколько различных слов
@@ -50,21 +39,188 @@
 # Output: 13
 # print('aBcdEfg.?,!'.strip('.?,!\n').lower())
 
-# text = "She sells sea shells on the sea shore The shells that she sells are sea shells I'm sure. So if she sells sea shells on the sea shore I'm sure that the shells are sea shore shells"
+'''
+text = "She sells sea shells on the sea shore The shells that she sells are sea shells I'm sure. So if she sells sea shells on the sea shore I'm sure that the shells are sea shore shells"
 
-# list_text = list(text.split())
+list_text = list(text.split())
 
-# for i in range(len(list_text) - 1):
-#     list_text[i] = list_text[i].strip('.?,!\n').lower()
+for i in range(len(list_text) - 1):
+    list_text[i] = list_text[i].strip('.?,!\n').lower()
 
-# print(f"В тексте встречается {len(set(list_text))} различных слов.")
-
+print(f"В тексте встречается {len(set(list_text))} различных слов.")
+'''
 
 # Задача №29. ==========================================================================
 # Задана последовательность неотрицательных целых чисел. Требуется определить
 # значение наибольшего элемента последовательности, которая завершается первым
 # встретившимся нулем (число 0 не входит в последовательность)
+'''
+import random as rnd
+
+list1 = [rnd.randint(0,9) for i in range(30)]
+
+print("Список:")
+print(list1)
+print("Последовательность, заверщающаяся первым встретившимся нулём:")
+print(list1[:list1.index(0)])
+if list1.index(0) != 0:
+    print("Масимум в этой последовательности: ", max(list1[:list1.index(0)]))
+else:
+    print("В пустой последовательности нет максимума.")
+'''
+
+# Задача №39 =============================================================================
+# Даны два массива чисел. Требуется вывести те элементы первого массива (в том порядке, 
+# в каком они идут в первом массиве), которых нет во втором массиве. 
+# Пользователь вводит число N - количество элементов в первом массиве, затем N чисел - 
+# элементы массива. Затем число M - количество элементов во втором массиве. Затем элементы 
+# второго массива.
+# Ввод: 
+# 7
+# 3 1 3 4 2 4 12
+# 6
+# 4 15 43 1 15 1 
+# ВЫВОД : 3 3 2 12
+
+'''
+import random as rnd
+
+def listDifference(list1, list2):
+    list3 = []
+    for item in list1:
+        if item not in list2:
+            list3.append(item)
+    return list3
+
+list1 = [rnd.randint(0,9) for i in range(10)]
+list2 = [rnd.randint(0,9) for i in range(10)]
+
+print("========= ВЫЧИТАНИЕ СПИСКОВ ==========")
+print("СПИСОК 1:")
+print(*list1)
+print("СПИСОК 2:")
+print(*list2)
+print("Элементы 1го списка, которых нет во 2м:")
+print(*listDifference(list1, list2))
+'''
+
+# ========= ВЫЧИТАНИЕ СПИСКОВ ==========
+# СПИСОК 1:
+# 8 3 9 0 7 8 1 1 9 2
+# СПИСОК 2:
+# 7 8 0 8 3 7 5 7 9 2
+# Элементы 1го списка, которых нет во 2м:
+# 1 1
+
+# Задача №41 ==================================================================================
+# Дан массив, состоящий из целых чисел. Напишите программу, которая в данном массиве определит
+# количество элементов, у которых два соседних и, при этом, оба соседних элемента меньше данного. 
+# Сначала вводится число N — количество элементов в массиве. Далее записаны N чисел — элементы 
+# массива. Массив состоит из целых чисел.
+# Ввод:               Ввод:
+# 5                   5 
+# 1 2 3 4 5           1 5 1 5 1
+# Вывод:              Вывод:
+# 0                   2
+'''
+import random as rnd
+
+def countElemsWithMin(mylist):
+    result = 0
+    for i in range(1,len(mylist) - 1):
+        if mylist[i] > mylist[i-1] and mylist[i] > mylist[i+1]:
+            result += 1
+    return result
 
 
+print("\n====== ПОДСЧЕТ ЭЛЕМЕНТОВ С меньшими СОСЕДЯМИ ======")
+list_1 = [rnd.randint(1,5) for i in range(10)]
+print("Дан список:")
+print(list_1)
+print("В этом списке кол-во элементов с меньшими двумя соседями - " + str(countElemsWithMin(list_1)) + "\n")
+'''
+# ====== ПОДСЧЕТ ЭЛЕМЕНТОВ С меньшими СОСЕДЯМИ ======
+# Дан список:
+# [4, 4, 5, 3, 3, 2, 1, 3, 4, 1]
+# В этом списке кол-во элементов с меньшими двумя соседями - 2
 
+# Задача №43 ===================================================================================
+# Дан список чисел. Посчитайте, сколько в нем пар элементов, равных друг другу. Считается, что любые
+# два элемента, равные друг другу образуют одну пару, которую необходимо посчитать. Вводится список
+# чисел. Все числа списка находятся на разных строках.
+# Ввод:               Вывод:
+# 1 2 3 2 3           2
 
+'''
+import random as rnd
+
+list_1 = [rnd.randint(2,6) for i in range(20)]
+print(list_1)
+
+summOfPairs = 0
+
+for item in sorted(set(list_1)): 
+    if  list_1.count(item) // 2 == 0:   
+        print(f"элемент {item} пары не имеет")   
+    else:
+        print(f"элемент {item} имеет {list_1.count(item) // 2} пар(ы)")
+        summOfPairs += list_1.count(item) // 2
+
+print(f"Всего {summOfPairs} пар.")
+'''
+
+# [3, 2, 2, 6, 2, 3, 5, 2, 3, 6, 3, 6, 5, 6, 6, 2, 4, 2, 5, 6]
+# элемент 2 имеет 3 пар(ы)
+# элемент 3 имеет 2 пар(ы)
+# элемент 4 пары не имеет
+# элемент 5 имеет 1 пар(ы)
+# элемент 6 имеет 3 пар(ы)
+# Всего 9 пар.
+
+# Задача №45. =================================================================
+# Два различных натуральных числа n и m называются дружественными, если 
+# сумма делителей числа n (включая 1, но исключая само n) равна числу m 
+# и наоборот. Например, 220 и 284 – дружественные числа. По данному числу k 
+# выведите все пары дружественных чисел, каждое из которых не превосходит k. 
+# Программа получает на вход одно натуральное число k, не превосходящее 10^5 . 
+# Программа должна вывести все пары дружественных чисел, каждое из которых не 
+# превосходит k. Пары необходимо выводить по одной в строке, разделяя пробелами. 
+# Каждая пара должна быть выведена только один раз (перестановка чисел новую
+# пару не дает).
+# Ввод:       Вывод:
+# 300         220     284
+
+'''
+def dividerSumm(num):
+    summ = 1
+    for i in range(2, num):
+        if num % i == 0:
+            summ += i
+    return summ
+
+def findFriendlyNumbers(max):
+    friendlyNumbersList = list()
+    for i in range(2, max):
+        firstBro = i
+        secondBro = dividerSumm(firstBro)
+        if firstBro < max and secondBro < max:
+            if firstBro != secondBro and dividerSumm(secondBro) == firstBro:
+                if firstBro not in friendlyNumbersList:
+                    print(firstBro, " <==> ", secondBro)
+                friendlyNumbersList.append(firstBro)
+                friendlyNumbersList.append(secondBro)
+
+userInput = int(input("Введите потолок диапазона поиска дружественных чисел... "))
+findFriendlyNumbers(userInput)
+'''
+
+# Введите потолок диапазона поиска дружественных чисел... 30_000
+# 220  <==>  284
+# 1184  <==>  1210
+# 2620  <==>  2924
+# 5020  <==>  5564
+# 6232  <==>  6368
+# 10744  <==>  10856
+# 12285  <==>  14595
+# 17296  <==>  18416
+# результат сверен с википедией :)
