@@ -234,4 +234,14 @@ for i in range(n - 1):
         max1 = kg
 print(min1, max1)
 """
+phonebook = {}
+phonebook_file = open('phones.txt', 'r', encoding="UTF-8")
+data = phonebook_file.readlines() # .readlines() преобразует файл в список, где элементы - строки
+phonebook_file.close
 
+for line in data:
+    contact = line.split(':')
+    phonebook[int(contact[0])] = {'name': contact[1].strip(), 'phone': contact[2].strip(), 'comment': contact[3].strip()}
+
+stringline = max([len(item['name']) for item in phonebook.values()])
+print(stringline)
