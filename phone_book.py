@@ -80,31 +80,43 @@ def search_contact(target = ''):
             result[i] = contact
     return result
 
+
 def remove_contact():
-    print_contacts(search_contact("для удаления"))
-    indexToRemove = int(input("Введите ID контакта для удаления >> "))
-    contactToRemove = phonebook.pop(indexToRemove)
-    print_message(f" Контакт \"{contactToRemove['name']}\" успешно удалён ! ")
+    removeDict = search_contact("для удаления")
+    if len(removeDict) == 0:
+        print("Ничего не найдено...")
+    else:
+        print_contacts(removeDict)
+        indexToRemove = int(input("Введите ID контакта для УДАЛЕНИЯ >> "))
+        if  indexToRemove in removeDict.keys():
+            contactToRemove = phonebook.pop(indexToRemove)
+            print_message(f" Контакт \"{contactToRemove['name']}\" успешно удалён ! ")
+        else:
+            print("Контакта с таким ID нет среди найденных")
+            select = input("Повторить поиск ? (Введите \"+\", если ДА, и \"-\", если НЕТ) > ")
+            if select == "+":
+                remove_contact()
 
 
 def edit_contact():
     editDict = search_contact("для редактирования")
     if len(editDict) == 0:
         print("Ничего не найдено...")
+        select = input("Повторить поиск ? (Введите \"+\", если ДА, и \"-\", если НЕТ) > ")
+        if select == "+":
+            edit_contact()
     else:
         print_contacts(editDict)
-        indexToRemove = int(input("Введите ID контакта для ИЗМЕНЕНИЯ >> "))
-        if  indexToRemove in editDict.keys():
-            print("Введите новые данные контакта:")
-            phonebook[indexToRemove]['name']    = input("Имя контакта >> ").strip()
-            phonebook[indexToRemove]['phone']   = input("Телефон      >> ").strip()
-            phonebook[indexToRemove]['comment'] = input("Комментарий  >> ").strip()
-            print_message(f"Контакт \"{phonebook[indexToRemove]['name']}\" успешно добавлен.")
-        else:
-            print("Контакта с таким ID нет среди найденных")
-            select = input("Повторить поиск ? (Введите \"+\", если ДА, и \"-\", если НЕТ) > ")
-            if select == "+":
-                edit_contact()
+        while True:
+            indexToEdit = int(input("Введите ID контакта для ИЗМЕНЕНИЯ >> "))
+            if  indexToEdit in editDict.keys():
+                print("Введите новые данные контакта:")
+                phonebook[indexToEdit]['name']    = input("Имя контакта >> ").strip()
+                phonebook[indexToEdit]['phone']   = input("Телефон      >> ").strip()
+                phonebook[indexToEdit]['comment'] = input("Комментарий  >> ").strip()
+                print_message(f"Контакт \"{phonebook[indexToEdit]['name']}\" успешно изменён.")
+            else:
+                print("Контакта с таким ID нет среди найденных")
 
 
 def exit_program():
@@ -117,9 +129,6 @@ def exit_program():
         if select == "-":
             print_message("ВОТ и ВСЁ !")
             break
-
-
-
     
 
 open_file()
