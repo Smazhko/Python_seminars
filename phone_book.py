@@ -18,7 +18,7 @@ def menu() -> int:
         select = input("\nВыберите пункт меню... > ")
         if select.isdigit() and 0 < int(select) < 10:
             return int(select)
-        print_message("Ошибка ввода (необходимо ввести цифры от 1 до 8). Попробуйте ещё раз.")
+        print_message("Ошибка ввода (необходимо ввести цифры от 1 до 9). Попробуйте ещё раз.")
 
 
 def open_file(path = 'phones.txt'):
@@ -90,17 +90,19 @@ def remove_contact():
     removeDict = search_contact("для удаления")
     if len(removeDict) == 0:
         print("Ничего не найдено...")
+        select = input("Повторить поиск ? (Введите \"+\", если ДА, и \"-\", если НЕТ) > ")
+        if select == "+":
+            remove_contact()
     else:
         print_contacts(removeDict)
-        indexToRemove = inputID("Введите ID контакта для УДАЛЕНИЯ")
-        if  indexToRemove in removeDict.keys():
-            contactToRemove = phonebook.pop(indexToRemove)
-            print_message(f" Контакт \"{contactToRemove['name']}\" успешно удалён ! ")
-        else:
-            print("Контакта с таким ID нет среди найденных")
-            select = input("Повторить поиск ? (Введите \"+\", если ДА, и \"-\", если НЕТ) > ")
-            if select == "+":
-                remove_contact()
+        while True:
+            indexToRemove = inputID("Введите ID контакта для УДАЛЕНИЯ")
+            if  indexToRemove in removeDict.keys():
+                contactToRemove = phonebook.pop(indexToRemove)
+                print_message(f" Контакт \"{contactToRemove['name']}\" успешно удалён ! ")
+                break
+            else:
+                print("Контакта с таким ID нет среди найденных")
 
 
 def edit_contact():
@@ -130,12 +132,15 @@ def exit_program(saveFlag):
         save_file()
     print_message("ВОТ и ВСЁ! Приходите ещё ^_^")
 
-def inputID(message):
+
+def inputID(message) -> int:
     userInput = input(message + " >> ")
     if len(userInput) != 0 and userInput.isdigit():
-        return int(userInput)
+        result = int(userInput)
+        return result
     else:
-        inputID("Неверный ввод. " + message)
+        print("НЕВЕРНЫЙ ВВОД! ", end="")
+        return inputID(message)
     
 
 open_file()
