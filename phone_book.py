@@ -8,14 +8,15 @@ def print_message(message): #┌─┐└─┘│
 
 def menu() -> int:
     main_menu = '''Работа с телефонным справочиником:
-    (1) открыть файл                (5) найти контакт  
-    (2) сохранить файл              (6) изменить контакт
-    (3) показать все контакты       (7) удалить контакт
-    (4) добавить новый контакт      (8) выход из программы'''
+    (1) открыть файл                (6) изменить контакт
+    (2) сохранить файл              (7) удалить контакт
+    (3) показать все контакты       (8) выйти без сохранения
+    (4) добавить новый контакт      (9) сохранить изменения и выйти
+    (5) найти контакт'''
     print(main_menu)
     while True:
         select = input("\nВыберите пункт меню... > ")
-        if select.isdigit() and 0 < int(select) < 9:
+        if select.isdigit() and 0 < int(select) < 10:
             return int(select)
         print_message("Ошибка ввода (необходимо ввести цифры от 1 до 8). Попробуйте ещё раз.")
 
@@ -49,11 +50,15 @@ def print_contacts (data: dict[int, dict]):#┌─┬─┐└─┴─┘│├
         nameField    = max([len(item['name']) for item in data.values()]) #максимальная из списка длин полей NAME
         commentField = max([len(item['comment']) for item in data.values()])
         phoneField   = max([len(item['phone']) for item in data.values()])
+        if nameField < 3:
+            nameField = 3
+        if commentField < 7:
+            commentField = 7
+        if phoneField < 7:
+            phoneField = 7
         print("┌" + "─" * idField + "┬" + "─" * nameField + "┬" +"─" * commentField + "┬" + "─" * phoneField + "┐")
         print("│" + "ID".center(idField) + "│" + "ИМЯ".center(nameField) + "│" + "КОММЕНТ".center(commentField) + "│" + "ТЕЛЕФОН".center(phoneField) + "│")
         print("├" + "─" * idField + "┼" + "─" * nameField + "┼" +"─" * commentField + "┼" + "─" * phoneField + "┤")
-
-
         for i, contact in data.items():
             print(f"│{i:^{idField}}│{contact['name']:<{nameField}}│{contact['comment']:<{commentField}}│{contact['phone']:<{phoneField}}│")
         print("└" + "─" * idField + "┴" + "─" * nameField + "┴" +"─" * commentField + "┴" + "─" * phoneField + "┘")
@@ -64,9 +69,9 @@ def print_contacts (data: dict[int, dict]):#┌─┬─┐└─┴─┘│├
 def add_contact():
     print_message("Введите данные нового контакта")
     newID = max(list(phonebook.keys())) + 1
-    newName    = input("Имя контакта >> ").strip()
-    newPhone   = input("Телефон      >> ").strip()
-    newComment = input("Комментарий  >> ").strip()
+    newName    = input("Имя контакта >> ").strip().replace(":", "-")
+    newPhone   = input("Телефон      >> ").strip().replace(":", "-")
+    newComment = input("Комментарий  >> ").strip().replace(":", "-")
     phonebook[newID] = {'name': newName, 'phone': newPhone, 'comment': newComment}
     print_message(f"Контакт \"{newName}\" успешно добавлен.")
 
@@ -87,7 +92,7 @@ def remove_contact():
         print("Ничего не найдено...")
     else:
         print_contacts(removeDict)
-        indexToRemove = int(input("Введите ID контакта для УДАЛЕНИЯ >> "))
+        indexToRemove = inputID("Введите ID контакта для УДАЛЕНИЯ")
         if  indexToRemove in removeDict.keys():
             contactToRemove = phonebook.pop(indexToRemove)
             print_message(f" Контакт \"{contactToRemove['name']}\" успешно удалён ! ")
@@ -108,7 +113,7 @@ def edit_contact():
     else:
         print_contacts(editDict)
         while True:
-            indexToEdit = int(input("Введите ID контакта для ИЗМЕНЕНИЯ >> "))
+            indexToEdit = inputID("Введите ID контакта для ИЗМЕНЕНИЯ")
             if  indexToEdit in editDict.keys():
                 print("Введите новые данные контакта:")
                 phonebook[indexToEdit]['name']    = input("Имя контакта >> ").strip()
@@ -120,16 +125,17 @@ def edit_contact():
                 print("Контакта с таким ID нет среди найденных")
 
 
-def exit_program():
-    while True:
-        print_message("Сохранить изменения адресной книги в файл?")
-        select = input("Введите \"+\", если ДА, и \"-\", если НЕТ) > ")
-        if select == "+":
-            save_file()
-            break
-        if select == "-":
-            print_message("ВОТ и ВСЁ !")
-            break
+def exit_program(saveFlag):
+    if saveFlag:
+        save_file()
+    print_message("ВОТ и ВСЁ! Приходите ещё ^_^")
+
+def inputID(message):
+    userInput = input(message + " >> ")
+    if len(userInput) != 0 and userInput.isdigit():
+        return int(userInput)
+    else:
+        inputID("Неверный ввод. " + message)
     
 
 open_file()
@@ -151,7 +157,10 @@ while True:
         case 7:
             remove_contact()
         case 8:
-            exit_program()
+            exit_program(False)
+            break
+        case 9:
+            exit_program(True)
             break
     print("░" * 100)
 
