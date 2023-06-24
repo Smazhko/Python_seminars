@@ -115,6 +115,7 @@ def edit_contact():
                 phonebook[indexToEdit]['phone']   = input("Телефон      >> ").strip()
                 phonebook[indexToEdit]['comment'] = input("Комментарий  >> ").strip()
                 print_message(f"Контакт \"{phonebook[indexToEdit]['name']}\" успешно изменён.")
+                break
             else:
                 print("Контакта с таким ID нет среди найденных")
 
